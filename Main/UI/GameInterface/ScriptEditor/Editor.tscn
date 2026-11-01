@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://xur81llcq7hs"]
+[gd_scene load_steps=8 format=3 uid="uid://xur81llcq7hs"]
 
 [ext_resource type="Script" path="res://Main/UI/GameInterface/ScriptEditor/Editor.gd" id="1_cxafa"]
 [ext_resource type="FontFile" uid="uid://2w4b3kx2x8a5" path="res://Res/Font/Bold.otf" id="1_k4sli"]
@@ -7,6 +7,11 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mhem8"]
 bg_color = Color(0.4, 0.670588, 0.760784, 0.372549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fold"]
+bg_color = Color(0.4, 0.670588, 0.760784, 0.372549)
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_debug"]
 content_margin_left = 8.0
@@ -22,15 +27,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_cxafa")
 
-[node name="CodeEdit" type="CodeEdit" parent="."]
+[node name="Panel" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_left = 106.0
+offset_right = 451.0
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CodeEdit" type="CodeEdit" parent="Panel"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 16.0
 offset_top = 49.0
-offset_right = 517.0
+offset_right = 427.0
 offset_bottom = -261.0
 grow_vertical = 2
 theme_override_colors/current_line_color = Color(0.4, 0.670588, 0.760784, 0.372549)
@@ -54,14 +68,14 @@ script = ExtResource("1_kmdh5")
 _lenght_mode = 3
 _animation_lenght_from = 1.2
 
-[node name="Compile" type="Button" parent="."]
+[node name="Compile" type="Button" parent="Panel"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 232.0
+offset_left = 137.0
 offset_top = -251.0
-offset_right = 400.0
+offset_right = 305.0
 offset_bottom = -210.0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("1_k4sli")
@@ -76,14 +90,14 @@ _is_animation = true
 _lenght_mode = 3
 _animation_lenght_from = 1.2
 
-[node name="Debug" type="RichTextLabel" parent="."]
+[node name="Debug" type="RichTextLabel" parent="Panel"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 106.0
+offset_left = 16.0
 offset_top = -200.0
-offset_right = 517.0
+offset_right = 427.0
 offset_bottom = -20.0
 grow_vertical = 0
 theme_override_fonts/normal_font = ExtResource("1_k4sli")
@@ -92,3 +106,18 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_debug")
 bbcode_enabled = true
 scroll_following = true
 selection_enabled = true
+
+[node name="Fold" type="Button" parent="Panel"]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 49.0
+offset_right = 451.0
+offset_bottom = 113.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_k4sli")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxFlat_fold")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fold")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fold")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fold")
+text = "«"

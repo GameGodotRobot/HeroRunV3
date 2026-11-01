@@ -57,6 +57,8 @@ func _is_duplicate_gesture(event:InputEventGesture)->bool:
 func _unhandled_input(event:InputEvent)->void:
 	if event.is_echo():
 		return;
+	if (event is InputEventMouseButton or event is InputEventGesture) and self.get_viewport().gui_get_hovered_control() != null:
+		return;
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.is_action("scroll_up"):
 			self._cam_zoom(_ZOOM_STEP);

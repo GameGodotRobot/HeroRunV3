@@ -19,6 +19,9 @@ func start(character_visual_go:RefCounted, character_name:String)->void:
 	print(Time.get_ticks_msec()-time);
 	$Map.config_load(self.map_go_get().TilesGoGet());
 	$CharacterManager.config_load(self.map_go_get().CharactersGOGet());
+	for character_go in self.map_go_get().CharactersGOGet().CharactersGetArray():
+		if character_go.IsPlayerGet():
+			$CharacterInterface.character_select(character_go);
 	self.show();
 
 func end()->void:

@@ -34,8 +34,6 @@ signal map__click;
 
 ## Editor
 @warning_ignore("unused_signal")
-signal editor__click;
-@warning_ignore("unused_signal")
 signal editor__compile(text);
 
 ## Mind
