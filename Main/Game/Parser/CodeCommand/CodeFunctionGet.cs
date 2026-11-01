@@ -50,6 +50,10 @@ public partial class CodeFunctionGet: CodeCommand
         if (value is ExecutionReturn) {
             return (value as ExecutionReturn).ResultGet();
         }
+        if (CodeBodyGet() is CodeBody) {
+            error.Init($"Функция {FunctionGet().NameGet()} завершилась без return", PositionGet());
+            return null;
+        }
         return value;
     }
 

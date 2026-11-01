@@ -9,7 +9,7 @@ public partial class Say : CodeCommand, ICodeBody
         if (error.IsEmpty() == false) {
             return null;
         }
-        i_am.Say(Convert.ToString(scope.VariableGet("text")));
+        i_am.Say(Convert.ToString(scope.VariableGet("text"), System.Globalization.CultureInfo.InvariantCulture));
         return null;
     }
 

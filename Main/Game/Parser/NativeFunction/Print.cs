@@ -8,7 +8,7 @@ public partial class Print : CodeCommand,  ICodeBody
         if (error.IsEmpty() == false) {
             return null;
         }
-        String text = Convert.ToString(scope.VariableGet("text"));
+        String text = Convert.ToString(scope.VariableGet("text"), System.Globalization.CultureInfo.InvariantCulture);
         GD.Print(text);
         i_am.Log(MindError.LOG_LEVEL.INFO, text);
         return null;

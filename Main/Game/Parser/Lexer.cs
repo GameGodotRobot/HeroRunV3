@@ -16,7 +16,7 @@ public partial class Lexer : RefCounted
         new Lexem(Token.TOKEN_TYPE.TYPE_TEXT,"^(text)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.TYPE_NUMBER,"^(num)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.TYPE_BOOL,"^(bool)(?!\\w)"),
-        new Lexem(Token.TOKEN_TYPE.VECTOR, @"^vec\((-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)\)"),
+        new Lexem(Token.TOKEN_TYPE.TYPE_VECTOR, @"^(vec)(?!\w)(?!\s*\()"),
         new Lexem(Token.TOKEN_TYPE.IF,"^(if)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.ELIF,"^(elif)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.ELSE,"^(else)(?!\\w)"),

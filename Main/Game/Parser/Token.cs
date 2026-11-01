@@ -45,7 +45,7 @@ public partial class Token : RefCounted
         COMMA = 37,
         NEXT = 38,
         RETURN = 39,
-        VECTOR = 40
+        TYPE_VECTOR = 40
     }
 
     private readonly static HashSet<TOKEN_TYPE> MATH_OPERATOR_TOKEN_TYPE = new HashSet<TOKEN_TYPE> {
