@@ -20,20 +20,20 @@ public partial class CodeFunctionGet: CodeCommand
         return _parameters;
     }
 
-    private ICodeBody _code_body;
-    private void CodeBodySet(ICodeBody code_body) {
-        _code_body = code_body;
+    private CodeFunctionSet _function;
+    private void FunctionSet(CodeFunctionSet value) {
+        _function = value;
     }
-    public ICodeBody CodeBodyGet(){
-        return _code_body;
+    public CodeFunctionSet FunctionGet() {
+        return _function;
     }
 
-    private RETURN_TYPE _return_type;
-    private void ReturnTypeSet(RETURN_TYPE value) {
-        _return_type = value;
+    public ICodeBody CodeBodyGet(){
+        return FunctionGet().CodeBodyGet();
     }
+
     public override RETURN_TYPE ReturnTypeGet() {
-        return _return_type;
+        return FunctionGet().ReturnTypeGet();
     }
 
     public override object Execute(CodeScope<object> scope, MindError error, ICodeMapGO map_go, ICodeCharacterGO i_am) {
@@ -56,13 +56,11 @@ public partial class CodeFunctionGet: CodeCommand
     public CodeFunctionGet(
             int position,
             Dictionary<String, CodeCommand> parameters, 
-            ICodeBody code_body,
-            RETURN_TYPE return_type,
+            CodeFunctionSet function,
             CodeCommand parent
         ):base(position) {
         ParametersSet(parameters);
-        CodeBodySet(code_body);
-        ReturnTypeSet(return_type);
+        FunctionSet(function);
         ParentSet(parent);
     }
 }

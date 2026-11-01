@@ -125,6 +125,10 @@ public partial class Parser : RefCounted
         
         _tokens.Reverse();
         ScopeSet(new CodeScope<CodeCommand>());
+        HeadersParse();
+        if (ErrorGet() != ""){
+            return new Dictionary<String, CodeState>();
+        }
         List<CodeState> states = MainParse();
         if (ErrorGet() != ""){
             return new Dictionary<String, CodeState>();
@@ -151,27 +155,57 @@ public partial class Parser : RefCounted
                     states.Add(state);
                     break;
                 case Token.TOKEN_TYPE.FUNC:
-                    CodeFunctionSet func = FunctionSetParse();
+                    FunctionSetParse();
                     if (ErrorGet() != "") {
                         return null;
                     }
-                    FunctionAdd(func);
                     break;
             }
         }
         return states;
     }
 
-    private CodeFunctionSet FunctionSetParse() {
+    private void HeadersParse() {
+        List<Token> tokens = new List<Token>(TokensGet());
+        while(TokensGet().Count > 0) {
+            if (TokenPopBack().TokenTypeGet() != Token.TOKEN_TYPE.FUNC) {
+                continue;
+            }
+            ScopeGet().ScopeStart();
+            CodeFunctionSet func = FunctionHeaderParse();
+            ScopeGet().ScopeEnd();
+            if (ErrorGet() != "") {
+                return;
+            }
+            if (FunctionGet(func.NameGet()) != null) {
+                ErrorSet("PARSE FUNCTION: FUNCTION ALREADY DECLARED");
+                return;
+            }
+            FunctionAdd(func);
+        }
+        TokensSet(tokens);
+    }
+
+    private void FunctionSetParse() {
         ScopeGet().ScopeStart();
+        CodeFunctionSet header = FunctionHeaderParse();
+        if (ErrorGet() != "") {
+            return;
+        }
+
+        ICodeBody code_body = BodyParse(1, BODY_CYCLE.FUNCTION);
+        if (ErrorGet() != "") {
+            return;
+        }
+
+        ScopeGet().ScopeEnd();
+        _functions_table[header.NameGet()].CodeBodySet(code_body);
+    }
+
+    private CodeFunctionSet FunctionHeaderParse() {
         Token func_name = TokenPopBack();
         if (func_name == null || func_name.TokenTypeGet() != Token.TOKEN_TYPE.NAME) {
             ErrorSet("PARSE FUNCTION: FUNCTION NAME INVALID");
-            return null;
-        }
-
-        if (FunctionGet(func_name.TextGet()) != null) {
-            ErrorSet("PARSE FUNCTION: FUNCTION ALREADY DECLARED");
             return null;
         }
 
@@ -206,20 +240,13 @@ public partial class Parser : RefCounted
             return null;
         }
 
-        ICodeBody code_body = BodyParse(1, BODY_CYCLE.FUNCTION);
-        if (ErrorGet() != "") {
-            return null;
-        }
-
-        ScopeGet().ScopeEnd();
-        
         switch(ret.TokenTypeGet()) {
             case Token.TOKEN_TYPE.TYPE_TEXT:
-                return new CodeFunctionSet(func_name.PositionGet(), func_name.TextGet(), parameters, code_body, CodeCommand.RETURN_TYPE.TEXT);
+                return new CodeFunctionSet(func_name.PositionGet(), func_name.TextGet(), parameters, CodeCommand.RETURN_TYPE.TEXT);
             case Token.TOKEN_TYPE.TYPE_BOOL:
-                return new CodeFunctionSet(func_name.PositionGet(), func_name.TextGet(), parameters, code_body, CodeCommand.RETURN_TYPE.BOOL);
+                return new CodeFunctionSet(func_name.PositionGet(), func_name.TextGet(), parameters, CodeCommand.RETURN_TYPE.BOOL);
             case Token.TOKEN_TYPE.TYPE_NUMBER:
-                return new CodeFunctionSet(func_name.PositionGet(), func_name.TextGet(), parameters, code_body, CodeCommand.RETURN_TYPE.NUMBER);
+                return new CodeFunctionSet(func_name.PositionGet(), func_name.TextGet(), parameters, CodeCommand.RETURN_TYPE.NUMBER);
         }
 
         ErrorSet("PARSE FUNCTION: RETURN TYPE INVALID");
@@ -340,6 +367,9 @@ public partial class Parser : RefCounted
                         }
                         commands.Add(ret);
                         break;
+                    default:
+                        ErrorSet($"Неожиданная команда в теле: {token.TextGet()}");
+                        return null;
                 }
             }
             tab_count = TokenCountGet(Token.TOKEN_TYPE.TAB);
@@ -729,7 +759,7 @@ public partial class Parser : RefCounted
             parameters[param_names[i]] = param_values[i];
         }
 
-        return new CodeFunctionGet(func_name.PositionGet(), parameters, function.CodeBodyGet(), function.ReturnTypeGet(), parent);
+        return new CodeFunctionGet(func_name.PositionGet(), parameters, function, parent);
     }
 
     private List<CodeCommand> FunctionGetParametersParse() {

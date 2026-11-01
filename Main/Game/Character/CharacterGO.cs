@@ -35,7 +35,7 @@ public partial class CharacterGO : RefCounted, ICodeCharacterGO
         if (WeightMapGet().TileIsPathless(position) == false) {
             return false;
         }
-        if (ManagerCharacterGOGet().CharacterPositionChange(this, position, PositionGet()) == false) {
+        if (ManagerCharacterGOGet().CharacterPositionChange(this, PositionGet(), position) == false) {
             return false;
         }
         PositionSet(position);

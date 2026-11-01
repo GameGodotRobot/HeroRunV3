@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 public partial class Lexer : RefCounted
 {
     private static readonly List<Lexem> LEXEMS = new  List<Lexem> {
+        new Lexem(Token.TOKEN_TYPE.SPACE,"^[ \\t]+(//.*)?(?=\\r?\\n|$)", true),
         new Lexem(Token.TOKEN_TYPE.TAB,"^[\\t]"),
        // new Lexem(Token.TOKEN_TYPE.NEWLINE,"^[\\n]"),
         new Lexem(Token.TOKEN_TYPE.SPACE,"^[\\s\\n\\r\\v\\f]", true),
