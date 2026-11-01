@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 public partial class Lexer : RefCounted
 {
     private static readonly List<Lexem> LEXEMS = new  List<Lexem> {
+        new Lexem(Token.TOKEN_TYPE.SPACE,"^[ \\t]+(//.*)?(?=\\r?\\n|$)", true),
         new Lexem(Token.TOKEN_TYPE.TAB,"^[\\t]"),
        // new Lexem(Token.TOKEN_TYPE.NEWLINE,"^[\\n]"),
         new Lexem(Token.TOKEN_TYPE.SPACE,"^[\\s\\n\\r\\v\\f]", true),
@@ -15,7 +16,7 @@ public partial class Lexer : RefCounted
         new Lexem(Token.TOKEN_TYPE.TYPE_TEXT,"^(text)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.TYPE_NUMBER,"^(num)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.TYPE_BOOL,"^(bool)(?!\\w)"),
-        new Lexem(Token.TOKEN_TYPE.VECTOR, @"^vec\((-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)\)"),
+        new Lexem(Token.TOKEN_TYPE.TYPE_VECTOR, @"^(vec)(?!\w)(?!\s*\()"),
         new Lexem(Token.TOKEN_TYPE.IF,"^(if)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.ELIF,"^(elif)(?!\\w)"),
         new Lexem(Token.TOKEN_TYPE.ELSE,"^(else)(?!\\w)"),
@@ -55,11 +56,30 @@ public partial class Lexer : RefCounted
         return _error;
     }
 
+    private int _error_position;
+    private void ErrorPositionSet(int value) {
+        _error_position = value;
+    }
+    public int ErrorPositionGet() {
+        return _error_position;
+    }
+
+    private static readonly Regex SPACE_INDENT = new Regex("^\\t*( +)[ \\t]*(?!//)\\S");
+
     public List<Token> Analyze(String text) {
         ErrorSet("");
         int position = 0;
+        bool is_line_start = true;
         List<Token> tokens = new List<Token>();
         while (text.Length > 0) {
+            if (is_line_start) {
+                Match indent = SPACE_INDENT.Match(text);
+                if (indent.Success) {
+                    ErrorSet("INDENTATION MUST USE TABS, NOT SPACES");
+                    ErrorPositionSet(position + indent.Groups[1].Index);
+                    return new List<Token>();
+                }
+            }
             bool is_error = true;
             foreach(Lexem lexem in LEXEMS) {
                 Match match = lexem.TokenFind(text);
@@ -74,11 +94,13 @@ public partial class Lexer : RefCounted
                 }
                 position += match.Length;
                 text = text.Substring(match.Length);
+                is_line_start = match.Value.EndsWith("\n");
                 is_error = false;
                 break;
             }
             if (is_error == true) {
-                ErrorSet($"{position}: UNKNOWN CHARACTER EXPRESSION");
+                ErrorSet("UNKNOWN CHARACTER EXPRESSION");
+                ErrorPositionSet(position);
                 return new List<Token>();
             }
         }

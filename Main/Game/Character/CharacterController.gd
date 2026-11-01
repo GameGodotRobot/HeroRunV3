@@ -17,6 +17,16 @@ func init(character_go:RefCounted)->void:
 		push_error('SaySignal not connected _on_say');
 	if character_go.connect("MoveSignal", Callable(self, "_on_move")) != OK:
 		push_error('MoveSignal not connected _on_move');
+	if character_go.connect("LogSignal", Callable(self, "_on_log")) != OK:
+		push_error('LogSignal not connected _on_log');
+	self._player_move_emit(true);
+
+func _on_log(level:int, text:String, line:int)->void:
+	GlobalSignal.emit_signal('mind__log', level, text, line);
+
+func _player_move_emit(is_spawn:bool)->void:
+	if self.character_go_get().IsPlayerGet():
+		GlobalSignal.emit_signal('character_controller__player_move', self.global_position, is_spawn);
 
 func _ready()->void:
 	if self.connect("input_event", Callable(self, '_on_input_event')) != OK:
@@ -27,6 +37,7 @@ func _on_say(text:String)->void:
 
 func _on_move(pos:Vector2)->void:
 	self.position = Map.to_world_position(pos);
+	self._player_move_emit(false);
 
 func _on_input_event(_viewport:Viewport, event:InputEvent, _shape_idx:int):
 	if !(event is InputEventScreenTouch):

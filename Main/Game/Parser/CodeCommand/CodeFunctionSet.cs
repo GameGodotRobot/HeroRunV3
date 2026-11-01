@@ -22,7 +22,7 @@ public partial class CodeFunctionSet: CodeCommand
     }
 
     private ICodeBody _code_body;
-    private void CodeBodySet(ICodeBody code_body) {
+    public void CodeBodySet(ICodeBody code_body) {
         _code_body = code_body;
     }
     public ICodeBody CodeBodyGet(){
@@ -52,5 +52,13 @@ public partial class CodeFunctionSet: CodeCommand
         ParametersSet(parameters);
         CodeBodySet(code_body);
         ReturnTypeSet(return_type);
+    }
+
+    public CodeFunctionSet(
+            int position,
+            String name,
+            Dictionary<String, CodeCommand.RETURN_TYPE> parameters,
+            RETURN_TYPE return_type
+        ):this(position, name, parameters, null, return_type) {
     }
 }

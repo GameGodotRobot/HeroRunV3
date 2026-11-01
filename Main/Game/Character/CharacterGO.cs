@@ -7,6 +7,8 @@ public partial class CharacterGO : RefCounted, ICodeCharacterGO
     public delegate void SaySignalEventHandler(String text);
     [Signal]
     public delegate void MoveSignalEventHandler(Vector2I position);
+    [Signal]
+    public delegate void LogSignalEventHandler(int level, String text, int line);
 
     private String _name;
     private void NameSet(String value) {
@@ -35,7 +37,7 @@ public partial class CharacterGO : RefCounted, ICodeCharacterGO
         if (WeightMapGet().TileIsPathless(position) == false) {
             return false;
         }
-        if (ManagerCharacterGOGet().CharacterPositionChange(this, position, PositionGet()) == false) {
+        if (ManagerCharacterGOGet().CharacterPositionChange(this, PositionGet(), position) == false) {
             return false;
         }
         PositionSet(position);
@@ -77,6 +79,9 @@ public partial class CharacterGO : RefCounted, ICodeCharacterGO
     public String MindCompile() {
         return MindGoGet().Compile();
     }
+    public int MindErrorLineGet() {
+        return MindGoGet().LineGet(MindGoGet().ErrorPositionGet());
+    }
     public void TestExecute() {
         Execute(null);
     }
@@ -98,9 +103,15 @@ public partial class CharacterGO : RefCounted, ICodeCharacterGO
         return true;
     }
 
+    public void Log(MindError.LOG_LEVEL level, String text) {
+        EmitSignal(SignalName.LogSignal, (int)level, text, -1);
+    }
 
     public void Execute(ICodeMapGO code_map_go) {
-        MindGoGet().Execute(code_map_go, this);
+        MindError error = MindGoGet().Execute(code_map_go, this);
+        if (error.IsEmpty() == false) {
+            EmitSignal(SignalName.LogSignal, (int)MindError.LOG_LEVEL.ERROR, error.TextGet(), MindGoGet().LineGet(error.PositionGet()));
+        }
     }
 
     public CharacterGO(

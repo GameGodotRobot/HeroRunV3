@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl4a40cpdhxlh"]
+[gd_scene load_steps=9 format=3 uid="uid://dl4a40cpdhxlh"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_f15ox"]
 [ext_resource type="PackedScene" uid="uid://d1d2tnq1waidi" path="res://Main/UI/MainMenu/MainMenu.tscn" id="1_kc7i8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Main/UI/SplashScreens/SplashScreens.gd" id="4_thepb"]
 [ext_resource type="PackedScene" uid="uid://dxmo1s01sbdi8" path="res://Main/UI/SplashScreens/Node/SplashScreenDark.tscn" id="5_kkyoy"]
 [ext_resource type="PackedScene" uid="uid://dxtuilcmdfmus" path="res://Main/UI/SplashScreens/Node/SplashScreenLight.tscn" id="6_tekts"]
+[ext_resource type="Script" path="res://Main/UI/GameInterface/Rulers/Rulers.gd" id="7_rulr"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_f15ox")
@@ -17,6 +18,18 @@ script = ExtResource("2_ef657")
 [node name="Game" parent="." instance=ExtResource("3_xhdv6")]
 
 [node name="MainMenu" parent="." instance=ExtResource("1_kc7i8")]
+
+[node name="RulersLayer" type="CanvasLayer" parent="."]
+
+[node name="Rulers" type="Control" parent="RulersLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_rulr")
 
 [node name="SplashScreens" type="CanvasLayer" parent="."]
 script = ExtResource("4_thepb")

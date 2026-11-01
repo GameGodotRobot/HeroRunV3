@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public partial class MindError : RefCounted
 {
+    public enum LOG_LEVEL {
+        INFO = 1,
+        WARNING = 2,
+        ERROR = 3
+    }
+
     private String _text = "";
     private void TextSet(String value) {
         _text = value;
