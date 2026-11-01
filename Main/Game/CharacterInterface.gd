@@ -35,6 +35,9 @@ func _on_editor_click()->void:
 func _on_editor_compile(text:String)->void:
 	self.character_go_get().MindTextSave(text);
 	var error:String = self.character_go_get().MindCompile();
+	if error != "":
+		GlobalSignal.emit_signal("mind__log", Editor.LOG_LEVEL.ERROR, error, self.character_go_get().MindErrorLineGet());
+		return;
 	var time = Time.get_ticks_msec();
 	self.character_go_get().TestExecute();
 	print('error: ',error,' time:', Time.get_ticks_msec() - time);

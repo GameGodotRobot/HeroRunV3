@@ -37,3 +37,7 @@ signal map__click;
 signal editor__click;
 @warning_ignore("unused_signal")
 signal editor__compile(text);
+
+## Mind
+@warning_ignore("unused_signal")
+signal mind__log(level, text, line);

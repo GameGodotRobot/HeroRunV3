@@ -29,6 +29,26 @@ public partial class MindGO : RefCounted
         return err;
     }
 
+    private int _error_position;
+    private void ErrorPositionSet(int value) {
+        _error_position = value;
+    }
+    public int ErrorPositionGet() {
+        return _error_position;
+    }
+
+    public int LineGet(int position) {
+        String text = TextGet();
+        int end = Math.Clamp(position, 0, text.Length);
+        int line = 0;
+        for (int i = 0; i < end; i++) {
+            if (text[i] == '\n') {
+                line++;
+            }
+        }
+        return line;
+    }
+
     public String Compile() {
         Parser parser = new Parser();
         Dictionary<String, CodeState> states = parser.Parse(TextGet());
@@ -36,6 +56,8 @@ public partial class MindGO : RefCounted
             StatesSet(states);
             return parser.ErrorGet();
         } else {
+            StatesSet(new Dictionary<String, CodeState>());
+            ErrorPositionSet(parser.PositionGet());
             return parser.ErrorGet();
         }
     }

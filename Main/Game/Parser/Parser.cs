@@ -117,6 +117,7 @@ public partial class Parser : RefCounted
         TokensSet(lexer.Analyze(text));
         if (lexer.ErrorGet() != "") {
             ErrorSet(lexer.ErrorGet());
+            PositionSet(lexer.ErrorPositionGet());
             return new Dictionary<String, CodeState>();
         }
         foreach(Token token in _tokens) {
