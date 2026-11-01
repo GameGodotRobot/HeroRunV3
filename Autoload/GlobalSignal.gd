@@ -25,6 +25,8 @@ signal spash_screens__end;
 ## CharacterController
 @warning_ignore("unused_signal")
 signal character_controller__click(character_go);
+@warning_ignore("unused_signal")
+signal character_controller__player_move(position, is_spawn);
 
 ## Map
 @warning_ignore("unused_signal")
