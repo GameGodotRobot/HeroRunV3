@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dcjvadt2toj3u"]
+
+[ext_resource type="Script" path="res://Main/Game/Character/CharacterController.gd" id="1_ipuh3"]
+[ext_resource type="PackedScene" uid="uid://c78ee3jrt05cj" path="res://Main/Game/Character/Node/Model/OrkModel.tscn" id="2_opcou"]
+[ext_resource type="FontFile" uid="uid://2w4b3kx2x8a5" path="res://Res/Font/Bold.otf" id="3_mjhfk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ad8g4"]
+height = 38.0
+
+[node name="Human" type="Area2D"]
+script = ExtResource("1_ipuh3")
+
+[node name="Model" parent="." instance=ExtResource("2_opcou")]
+scale = Vector2(2, 2)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -19)
+shape = SubResource("CapsuleShape2D_ad8g4")
+
+[node name="Navigation" type="NavigationAgent2D" parent="."]
+path_max_distance = 10000.0
+path_postprocessing = 1
+
+[node name="Interface" type="Node2D" parent="."]
+
+[node name="Say" type="Label" parent="Interface"]
+layout_direction = 1
+offset_left = -8.0
+offset_top = -57.0
+offset_right = 9.0
+offset_bottom = -44.0
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_mjhfk")
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

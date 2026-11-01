@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfnh11eq87ulr"]
+
+[ext_resource type="Script" path="res://Main/UI/AnimationSlider/AnimationSlider.gd" id="1_1dbbp"]
+[ext_resource type="FontFile" uid="uid://2w4b3kx2x8a5" path="res://Res/Font/Bold.otf" id="1_xbd1s"]
+
+[node name="AnimationSlider" type="Control"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 1
+script = ExtResource("1_1dbbp")
+_is_animation = true
+_lenght_mode = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_xbd1s")
+theme_override_font_sizes/font_size = 16
+text = "Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slider" type="HSlider" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+max_value = 1.0

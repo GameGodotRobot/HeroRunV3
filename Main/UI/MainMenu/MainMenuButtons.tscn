@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpxp0sfjb5k26"]
+
+[ext_resource type="Script" path="res://Main/UI/MainMenu/MainMenuButtons.gd" id="1_vlaw8"]
+[ext_resource type="FontFile" uid="uid://2w4b3kx2x8a5" path="res://Res/Font/Bold.otf" id="2_8gibq"]
+[ext_resource type="Script" path="res://Main/UI/AnimationButton/AnimationButton.gd" id="3_ifupf"]
+
+[node name="MainMenuButtons" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vlaw8")
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 445.0
+offset_right = 199.0
+offset_bottom = 501.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_8gibq")
+theme_override_font_sizes/font_size = 18
+text = "Start Game"
+clip_text = true
+script = ExtResource("3_ifupf")
+_is_animation = true
+_animation_lenght_from = 1.6
+
+[node name="Load" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 507.0
+offset_right = 214.0
+offset_bottom = 562.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_8gibq")
+theme_override_font_sizes/font_size = 18
+text = "Load"
+clip_text = true
+script = ExtResource("3_ifupf")
+_is_animation = true
+_animation_lenght_from = 1.6
+
+[node name="Exit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 569.0
+offset_right = 148.0
+offset_bottom = 624.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_8gibq")
+theme_override_font_sizes/font_size = 18
+text = "Exit"
+clip_text = true
+script = ExtResource("3_ifupf")
+_is_animation = true
+_animation_lenght_from = 1.6

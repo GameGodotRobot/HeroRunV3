@@ -1,0 +1,23 @@
+[gd_scene load_steps=8 format=3 uid="uid://dl4a40cpdhxlh"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_f15ox"]
+[ext_resource type="PackedScene" uid="uid://d1d2tnq1waidi" path="res://Main/UI/MainMenu/MainMenu.tscn" id="1_kc7i8"]
+[ext_resource type="Script" path="res://Main/Camera/Camera.gd" id="2_ef657"]
+[ext_resource type="PackedScene" uid="uid://bwjmf4rc6xmgo" path="res://Main/Game/Game.scn" id="3_xhdv6"]
+[ext_resource type="Script" path="res://Main/UI/SplashScreens/SplashScreens.gd" id="4_thepb"]
+[ext_resource type="PackedScene" uid="uid://dxmo1s01sbdi8" path="res://Main/UI/SplashScreens/Node/SplashScreenDark.tscn" id="5_kkyoy"]
+[ext_resource type="PackedScene" uid="uid://dxtuilcmdfmus" path="res://Main/UI/SplashScreens/Node/SplashScreenLight.tscn" id="6_tekts"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_f15ox")
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("2_ef657")
+
+[node name="Game" parent="." instance=ExtResource("3_xhdv6")]
+
+[node name="MainMenu" parent="." instance=ExtResource("1_kc7i8")]
+
+[node name="SplashScreens" type="CanvasLayer" parent="."]
+script = ExtResource("4_thepb")
+_SPLASH_SCREENS_PCKG = Array[PackedScene]([null, ExtResource("5_kkyoy"), ExtResource("6_tekts")])

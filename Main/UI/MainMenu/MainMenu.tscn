@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1d2tnq1waidi"]
+
+[ext_resource type="Texture2D" uid="uid://codo6llmky38p" path="res://Res/Texture/Background/Background.jpg" id="1_8vhqy"]
+[ext_resource type="Script" path="res://Main/UI/MainMenu/MainMenu.gd" id="1_fcbai"]
+[ext_resource type="Script" path="res://Main/UI/MainMenu/MainMenuBackground.gd" id="3_foyih"]
+[ext_resource type="PackedScene" uid="uid://bpxp0sfjb5k26" path="res://Main/UI/MainMenu/MainMenuButtons.tscn" id="3_xhlkj"]
+[ext_resource type="PackedScene" uid="uid://dh0uogyng6eiw" path="res://Main/UI/MainMenu/CharacterSelector.tscn" id="6_3lei8"]
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_fcbai")
+
+[node name="MainMenuBackground" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_8vhqy")
+script = ExtResource("3_foyih")
+
+[node name="MainMenuButtons" parent="." instance=ExtResource("3_xhlkj")]
+
+[node name="CharacterSelector" parent="." instance=ExtResource("6_3lei8")]
+visible = false

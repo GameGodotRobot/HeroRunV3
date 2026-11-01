@@ -1,0 +1,191 @@
+[gd_scene load_steps=10 format=3 uid="uid://dh0uogyng6eiw"]
+
+[ext_resource type="Script" path="res://Main/UI/MainMenu/CharacterSelector.gd" id="1_sojnb"]
+[ext_resource type="Script" path="res://Main/UI/AnimationPanel/AnimationPanel.gd" id="2_q8ssg"]
+[ext_resource type="PackedScene" uid="uid://bfnh11eq87ulr" path="res://Main/UI/AnimationSlider/AnimationSlider.tscn" id="3_r6etm"]
+[ext_resource type="FontFile" uid="uid://2w4b3kx2x8a5" path="res://Res/Font/Bold.otf" id="3_tnjp2"]
+[ext_resource type="Script" path="res://Main/UI/AnimationLineEdit/ValidationLineEdit.gd" id="4_476gb"]
+[ext_resource type="Script" path="res://Main/UI/MainMenu/CharacterPodium.gd" id="5_jt1af"]
+[ext_resource type="PackedScene" uid="uid://c5cnxrh2pr4if" path="res://Main/Game/Character/Node/Model/HumanModel.tscn" id="6_7syo1"]
+[ext_resource type="Script" path="res://Main/UI/AnimationButton/AnimationButton.gd" id="7_0s3nc"]
+[ext_resource type="PackedScene" uid="uid://c78ee3jrt05cj" path="res://Main/Game/Character/Node/Model/OrkModel.tscn" id="7_ishh5"]
+
+[node name="CharacterSelector" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sojnb")
+
+[node name="Panel" type="Panel" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -200.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_q8ssg")
+_is_animation = true
+_lenght_mode = 3
+_animation_lenght_from = 1.8
+
+[node name="Sliders" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 300.0
+offset_top = 73.0
+offset_right = 500.0
+offset_bottom = -60.0
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="HairColor" parent="Panel/Sliders" instance=ExtResource("3_r6etm")]
+layout_mode = 1
+offset_left = 25.0
+offset_top = 13.0
+offset_right = -30.0
+offset_bottom = 53.0
+_name = "Hair Color"
+_animation_lenght_from = 1.2
+
+[node name="EyeColor" parent="Panel/Sliders" instance=ExtResource("3_r6etm")]
+layout_mode = 1
+offset_left = 25.0
+offset_top = 54.0
+offset_right = -30.0
+offset_bottom = 94.0
+_name = "Eye Color"
+_animation_lenght_from = 1.2
+
+[node name="BodyColor" parent="Panel/Sliders" instance=ExtResource("3_r6etm")]
+layout_mode = 1
+offset_left = 28.0
+offset_top = 96.0
+offset_right = -27.0
+offset_bottom = 136.0
+_name = "Body Color"
+_animation_lenght_from = 1.2
+
+[node name="DressColor" parent="Panel/Sliders" instance=ExtResource("3_r6etm")]
+layout_mode = 1
+offset_left = 27.0
+offset_top = 133.0
+offset_right = -28.0
+offset_bottom = 173.0
+_name = "Dress Color"
+_animation_lenght_from = 1.2
+
+[node name="PantsColor" parent="Panel/Sliders" instance=ExtResource("3_r6etm")]
+layout_mode = 1
+offset_left = 29.0
+offset_top = 172.0
+offset_right = -26.0
+offset_bottom = 212.0
+_name = "Pants Color"
+_animation_lenght_from = 1.2
+
+[node name="Details" parent="Panel/Sliders" instance=ExtResource("3_r6etm")]
+layout_mode = 1
+offset_left = 26.0
+offset_top = -22.0
+offset_right = -29.0
+offset_bottom = 18.0
+_name = "Details"
+_animation_lenght_from = 1.2
+
+[node name="Hairstyle" parent="Panel/Sliders" instance=ExtResource("3_r6etm")]
+layout_mode = 1
+offset_left = 26.0
+offset_top = -56.0
+offset_right = -29.0
+offset_bottom = -16.0
+_name = "Hairstyle"
+_animation_lenght_from = 1.2
+
+[node name="LineEdit" type="LineEdit" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -50.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(140, 20)
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("3_tnjp2")
+theme_override_font_sizes/font_size = 16
+placeholder_text = "CharacterName"
+alignment = 1
+caret_blink = true
+script = ExtResource("4_476gb")
+_is_animation = null
+_lenght_mode = null
+_animation_lenght_from = null
+
+[node name="CharacterPodium" type="Control" parent="Panel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 140.0
+offset_top = -100.0
+offset_right = -40.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("5_jt1af")
+_RACES_PCKG = Array[PackedScene]([null, ExtResource("6_7syo1"), ExtResource("7_ishh5")])
+
+[node name="CharacterHuman" parent="Panel/CharacterPodium" instance=ExtResource("6_7syo1")]
+scale = Vector2(10, 10)
+
+[node name="Race" parent="Panel" instance=ExtResource("3_r6etm")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+offset_left = 50.0
+offset_top = 249.0
+offset_right = 237.0
+offset_bottom = 289.0
+grow_horizontal = 1
+_name = "Race"
+_animation_lenght_from = 1.2
+
+[node name="NewGame" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -101.0
+offset_top = 160.0
+offset_right = 101.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("3_tnjp2")
+theme_override_font_sizes/font_size = 18
+text = "Create Character"
+clip_text = true
+script = ExtResource("7_0s3nc")
+_is_animation = true
+_lenght_mode = 3
+_animation_lenght_from = 1.2

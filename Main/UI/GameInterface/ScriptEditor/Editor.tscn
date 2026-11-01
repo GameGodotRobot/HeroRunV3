@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://xur81llcq7hs"]
+
+[ext_resource type="Script" path="res://Main/UI/GameInterface/ScriptEditor/Editor.gd" id="1_cxafa"]
+[ext_resource type="FontFile" uid="uid://2w4b3kx2x8a5" path="res://Res/Font/Bold.otf" id="1_k4sli"]
+[ext_resource type="Script" path="res://Main/UI/AnimationTextEdit/AnimationCodeEdit.gd" id="1_kmdh5"]
+[ext_resource type="Script" path="res://Main/UI/AnimationButton/AnimationButton.gd" id="4_vxk5v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mhem8"]
+bg_color = Color(0.4, 0.670588, 0.760784, 0.372549)
+
+[node name="Editor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cxafa")
+
+[node name="CodeEdit" type="CodeEdit" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 106.0
+offset_top = 49.0
+offset_right = 517.0
+offset_bottom = -81.0
+grow_vertical = 2
+theme_override_colors/current_line_color = Color(0.4, 0.670588, 0.760784, 0.372549)
+theme_override_colors/background_color = Color(0.4, 0.670588, 0.760784, 0.372549)
+theme_override_fonts/font = ExtResource("1_k4sli")
+theme_override_font_sizes/font_size = 16
+text = "func abs(num a, num b)->num:
+	return a + b
+
+state init:
+	print(abs(5,5))"
+caret_blink = true
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_control_chars = true
+draw_tabs = true
+draw_spaces = true
+gutters_draw_line_numbers = true
+script = ExtResource("1_kmdh5")
+_lenght_mode = 3
+_animation_lenght_from = 1.2
+
+[node name="Compile" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 232.0
+offset_top = -71.0
+offset_right = 400.0
+offset_bottom = -30.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_k4sli")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/focus = SubResource("StyleBoxFlat_mhem8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mhem8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mhem8")
+text = "Compile"
+clip_text = true
+script = ExtResource("4_vxk5v")
+_is_animation = true
+_lenght_mode = 3
+_animation_lenght_from = 1.2
